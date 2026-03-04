@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pan Ziyu - Marketing Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #f7f7f7;
+      --text-primary: #1a1a1a;
+      --text-secondary: #555;
+      --card-bg: #ffffff;
+      --accent-color: #007bff;
+      --border-color: #e5e5e5;
+      --shadow-color: rgba(0, 0, 0, 0.05);
+      --font-main: "Inter", "Helvetica Neue", sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      font-family: var(--font-main);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      padding: 24px 48px;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+    
+    nav.scrolled {
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px var(--shadow-color);
+      padding: 16px 48px;
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 24px;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links a {
+      margin-left: 32px;
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--text-primary);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text-primary);
+    }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    
+    .hamburger {
+        display: none;
+        cursor: pointer;
+    }
+    .hamburger div {
+        width: 25px;
+        height: 2px;
+        background-color: var(--text-primary);
+        margin: 5px 0;
+        transition: all 0.3s ease;
+    }
+
+    .hero {
+      margin-top: 120px;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 0 24px;
+      overflow: hidden;
+    }
+
+    .hero-name {
+      position: absolute;
+      font-size: clamp(60px, 15vw, 180px);
+      font-weight: 900;
+      letter-spacing: -4px;
+      z-index: 0;
+      color: rgba(0, 0, 0, 0.04);
+      white-space: nowrap;
+    }
+
+    .hero-box {
+      display: flex;
+      max-width: 960px;
+      gap: 80px;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+    }
+
+    .avatar {
+      width: 300px;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 8px;
+      transform: rotate(-3deg);
+      border: 6px solid var(--card-bg);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+      transition: transform 0.3s ease;
+    }
+    
+    .avatar:hover {
+        transform: rotate(0deg) scale(1.03);
+    }
+
+    .intro h2 {
+      font-size: clamp(28px, 5vw, 42px);
+      margin-bottom: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .intro p {
+      font-size: 17px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      max-width: 420px;
+    }
+
+    .btn {
+      padding: 14px 36px;
+      background: var(--text-primary);
+      color: var(--bg-color);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .section {
+      max-width: 960px;
+      margin: 0 auto 120px;
+      padding: 0 24px;
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 40px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .section-title::before {
+        content: '';
+        width: 40px;
+        height: 2px;
+        background-color: var(--text-primary);
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 36px;
+      margin-bottom: 24px;
+      box-shadow: 0 5px 25px var(--shadow-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .skill {
+      padding: 8px 18px;
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+    
+    .skill:hover {
+        background-color: var(--text-primary);
+        color: var(--card-bg);
+        border-color: var(--text-primary);
+    }
+
+    .works {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .work-item {
+        background: var(--card-bg);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 5px 25px var(--shadow-color);
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+    }
+
+    .work-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .work-item img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .work-content {
+        padding: 24px;
+    }
+
+    .work-item h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .work-item p {
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+
+    .contact-info p {
+      margin-bottom: 16px;
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+    .contact-info p a {
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+    .contact-info p a:hover {
+        color: var(--accent-color);
+    }
+
+    footer {
+      text-align: center;
+      padding: 50px 24px;
+      font-size: 14px;
+      color: #999;
+      background-color: #e9e9e9;
+      margin-top: 120px;
+    }
+
+    @media (max-width: 992px) {
+        .hero-box {
+            gap: 40px;
+        }
+        .avatar {
+            width: 260px;
+            height: 350px;
+        }
+        .intro h2 {
+            font-size: 36px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+      nav {
+        padding: 16px 24px;
+      }
+      nav.scrolled {
+        padding: 12px 24px;
+      }
+      .nav-links {
+        position: fixed;
+        right: 0;
+        top: 0;
+        height: 100vh;
+        width: 60%;
+        background-color: var(--card-bg);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        transform: translateX(100%);
+        transition: transform 0.4s ease-in-out;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+      }
+      .nav-links.nav-active {
+        transform: translateX(0%);
+      }
+      .nav-links a {
+        margin-left: 0;
+        font-size: 16px;
+      }
+      .hamburger {
+        display: block;
+        z-index: 1001;
+      }
+      .toggle .line1 {
+        transform: rotate(-45deg) translate(-5px, 6px);
+      }
+      .toggle .line2 {
+        opacity: 0;
+      }
+      .toggle .line3 {
+        transform: rotate(45deg) translate(-5px, -6px);
+      }
+
+      .hero {
+        text-align: center;
+      }
+      .hero-box {
+        flex-direction: column;
+        gap: 40px;
+      }
+      .avatar {
+        width: 240px;
+        height: 320px;
+        transform: rotate(0);
+      }
+      .intro p {
+          max-width: 100%;
+      }
+      .works {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .section {
+        margin-bottom: 80px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<nav id="navbar">
+  <div class="logo">PORTFOLIO</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#education">Education</a>
+    <a href="#internship">Internship</a>
+    <a href="#skills">Skills</a>
+    <a href="#works">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="hamburger">
+    <div class="line1"></div>
+    <div class="line2"></div>
+    <div class="line3"></div>
+  </div>
+</nav>
+
+<header class="hero">
+  <h1 class="hero-name">PANZIYU</h1>
+  <div class="hero-box">
+    <div class="avatar-wrapper">
+      <img src="设计形象 (1).png" alt="Pan Ziyu" class="avatar">
+    </div>
+    <div class="intro">
+      <h2>Hi, I'm Pan Ziyu</h2>
+      <p>23 years old, based in Beijing. Passionate about Marketing with data analysis and digital content creation capabilities.</p>
+      <a href="#contact" class="btn">Contact Me</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section" id="about">
+    <h2 class="section-title">About Me</h2>
+    <div class="card">
+      <p>With a solid foundation in advertising and practical capabilities in digital marketing, I excel at market insight, brand content operation, and influencer channel management. I am able to conduct basic data mining and analysis using Python/SQL, and proficiently apply AIGC tools and new media platform operation skills to implement marketing initiatives. With multiple marketing-related internships at leading enterprises, I possess full-process marketing capabilities ranging from strategic analysis to execution and delivery.</p>
+    </div>
+  </section>
+
+  <section class="section" id="education">
+    <h2 class="section-title">Education</h2>
+    <div class="card">
+      <h3>Hong Kong Baptist University</h3>
+      <p><strong>MA in AI and Digital Media (AIDM)</strong></p>
+    </div>
+    <div class="card">
+      <h3>Capital University of Economics and Business</h3>
+      <p><strong>Bachelor of Advertising</strong></p>
+    </div>
+  </section>
+
+  <section class="section" id="internship">
+    <h2 class="section-title">Internship Experience</h2>
+    <div class="card">
+      <h3>Beijing Yuanli Future Technology Co., Ltd.</h3>
+      <p><strong>Brand Content Operations Intern</strong> | Zebra Marketing Department</p>
+      <p>Jul 2024 - Sep 2024</p>
+    </div>
+    <div class="card">
+      <h3>Beijing BlueFocus Digital Media Technology Co., Ltd.</h3>
+      <p><strong>Strategy Intern</strong> | Domob Strategy Center</p>
+      <p>Jun 2023 - Aug 2023</p>
+    </div>
+    <div class="card">
+      <h3>Beijing D&S Public Relations Consultants Co., Ltd.</h3>
+      <p><strong>PR Intern</strong> | Division 21</p>
+      <p>Dec 2022 - Feb 2023</p>
+    </div>
+    <div class="card">
+      <h3>Beijing Sina Internet Information Service Co., Ltd.</h3>
+      <p><strong>New Media Operations Intern</strong> | Sina Finance M+Lady</p>
+      <p>Jul 2022 - Oct 2022</p>
+    </div>
+  </section>
+
+  <section class="section" id="skills">
+    <h2 class="section-title">Skills</h2>
+    <div class="card">
+      <div class="skills">
+        <span class="skill">Python</span>
+        <span class="skill">SQL</span>
+        <span class="skill">SPSS</span>
+        <span class="skill">Photoshop</span>
+        <span class="skill">Marketing Analysis</span>
+        <span class="skill">Digital Media</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="works">
+    <h2 class="section-title">Projects</h2>
+    <div class="works">
+      <div class="work-item">
+        <img src="屏幕截图 2026-03-03 224423.png" alt="Marketing Project">
+        <div class="work-content">
+          <h3>Marketing Analytics Project</h3>
+          <p>Data-driven marketing strategy analysis using Python & SQL.</p>
+        </div>
+      </div>
+      <div class="work-item">
+        <img src="屏幕截图 2026-03-03 224834.png" alt="Digital Media Project">
+        <div class="work-content">
+          <h3>Dataset Management
+          </h3>
+          <p>Automated analysis system for Youtube&Tiktok shortvideo trends</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <h2 class="section-title">Contact</h2>
+    <div class="card contact-info">
+      <p>📩 Email: <a href="mailto:25417819@life.hkbu.edu.hk">25417819@life.hkbu.edu.hk</a></p>
+      <p>📍 Location: Beijing, China</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © 2026 Pan Ziyu | Marketing Portfolio
+</footer>
+
+<script>
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  });
+
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav-links');
+  const links = document.querySelectorAll('.nav-links a');
+
+  hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('nav-active');
+    hamburger.classList.toggle('toggle');
+  });
+  
+  links.forEach(link => {
+      link.addEventListener('click', () => {
+          if (navLinks.classList.contains('nav-active')) {
+              navLinks.classList.remove('nav-active');
+              hamburger.classList.remove('toggle');
+          }
+      });
+  });
+</script>
+
+</body>
+</html>
